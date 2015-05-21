@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DCServicio" />
+  <xs:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+  <xs:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="GetFilePrincipalByAnoFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="anoFile" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFilePrincipalByAnoFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/DCServicio" minOccurs="0" name="GetFilePrincipalByAnoFileResult" nillable="true" type="q1:FilePrincipal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTipos">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTiposResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/DCServicio" minOccurs="0" name="GetTiposResult" nillable="true" type="q2:ArrayOfTipo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProcesos">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProcesosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/DCServicio" minOccurs="0" name="GetProcesosResult" nillable="true" type="q3:ArrayOfProceso" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcesarCorreos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Data" minOccurs="0" name="tablas" nillable="true" type="q4:ArrayOfDataTable" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcesarCorreosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProcesarCorreosResult" nillable="true" type="q5:ArrayOfint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcesarArchivos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="tabla" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataTable" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+              <xs:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProcesarArchivosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ProcesarArchivosResult" nillable="true" type="q6:ArrayOfint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BorrarDocumento">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="documentoID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BorrarDocumentoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BorrarDocumentoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditarDocumento">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="documentoID" type="xs:int" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="datos" nillable="true" type="q7:ArrayOfanyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EditarDocumentoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EditarDocumentoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DescargarDCArchivo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="documentoID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DescargarDCArchivoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/DCServicio" minOccurs="0" name="DescargarDCArchivoResult" nillable="true" type="q8:DCArchivo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EsAdministrador">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cuentaID" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EsAdministradorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EsAdministradorResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

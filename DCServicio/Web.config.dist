@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+   
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+  </configSections>
+  
+  <system.web>
+    <customErrors mode="Off"/>
+  </system.web>
+  
+  <appSettings>
+    <add key="fileServer" value="10.10.10.254" />
+    <add key="extraFileServers" value="10.10.11.254;10.10.12.254;10.10.13.254" />
+    <add key="servidorCarpeta" value="Documentacion" />
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true" />
+  </appSettings>
+  
+  <system.web>
+    <compilation debug="true" targetFramework="4.5.1" />
+    <httpRuntime targetFramework="4.5.1" />
+  </system.web>
+  
+  <system.serviceModel>
+    <services>
+      <service name="DCServicio.DCServicio" behaviorConfiguration="customBehaviour">
+        <endpoint address=""
+              binding="wsHttpBinding"
+              contract ="DCServicio.IDCServicio"
+              bindingConfiguration="ServiceBinding"
+              behaviorConfiguration="MyEndPointBehavior" >
+        </endpoint>
+        <endpoint contract="IMetadataExchange"
+              binding="mexHttpBinding"
+              address="mex" />
+      </service>
+    </services>
+    
+    <bindings>
+      <wsHttpBinding>
+        <binding name="ServiceBinding" maxReceivedMessageSize="2147483647" messageEncoding="Text">
+          <readerQuotas maxDepth="2147483647" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />  
+          <security mode="Message">
+            <message clientCredentialType="UserName"/>
+          </security>
+        </binding>
+      </wsHttpBinding>
+    </bindings>
+    
+    
+    <behaviors>
+      
+      <endpointBehaviors>
+        <behavior name="MyEndPointBehavior">
+        </behavior>
+      </endpointBehaviors>
+      
+      <serviceBehaviors>
+        <behavior>
+          <!-- Para evitar revelar información de los metadatos, establezca los valores siguientes en false antes de la implementación -->
+          <serviceMetadata httpGetEnabled="true" httpsGetEnabled="true" />
+          <!-- Para recibir detalles de las excepciones en los fallos, con el fin de poder realizar la depuración, establezca el valor siguiente en true. Para no revelar información sobre las excepciones, establézcalo en false antes de la implementación -->
+          <serviceDebug includeExceptionDetailInFaults="false" />
+        </behavior>
+        <behavior name="customBehaviour">
+          <serviceMetadata httpGetEnabled="true"/>
+          <serviceDebug includeExceptionDetailInFaults="true"/>
+          <!--Specify the Custom Authentication policy that will be used and add the policy location-->
+          <serviceCredentials>
+            <serviceCertificate findValue="vipacdc.vipac.pe"
+                          storeLocation="LocalMachine"
+                          storeName="TrustedPeople"
+                          x509FindType="FindBySubjectName" />
+            <userNameAuthentication userNamePasswordValidationMode="Custom"
+               customUserNamePasswordValidatorType="DCServicio.UserAuthentication,DCServicio"/>
+          </serviceCredentials>
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    
+    <protocolMapping>
+      <add binding="basicHttpsBinding" scheme="https" />
+    </protocolMapping>
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true" />
+  </system.serviceModel>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+    <!--
+        Para examinar el directorio raíz de la aplicación web durante la depuración, establezca el valor siguiente en true.
+        Establézcalo en false antes de la implementación para evitar revelar información sobre la carpeta de aplicación web.
+      -->
+    <directoryBrowse enabled="true" />
+  </system.webServer>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="v11.0" />
+      </parameters>
+    </defaultConnectionFactory>
+  </entityFramework>
+  <connectionStrings>
+    <add name="Entities" connectionString="metadata=res://*/DCModelo.csdl|res://*/DCModelo.ssdl|res://*/DCModelo.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=*:1521/vipa.*;PASSWORD=*;USER ID=*&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+</configuration>

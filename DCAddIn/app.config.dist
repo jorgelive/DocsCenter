@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="fileServers" type="System.Configuration.AppSettingsSection, System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+  </configSections>
+  <appSettings>
+    <add key="ubicacionDataServicio" value="http://*.pe:8080/DCDataServicio.svc/"/>
+    <add key="servidorCarpeta" value="Documentacion"/>
+    <add key="depositoCarpeta" value="DocumentacionDrop"/>
+    <add key="ClientSettingsProvider.ServiceUri" value=""/>
+  </appSettings>
+  <fileServers>
+    <add key="10.10.10" value="254"/>
+    <add key="10.10.11" value="254"/>
+    <add key="10.10.12" value="254"/>
+    <add key="10.10.13" value="254"/>
+  </fileServers>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Data.Edm" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Data.OData" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Data.Services.Client" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Spatial" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-5.6.3.0" newVersion="5.6.3.0"/>
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <system.serviceModel>
+    <bindings>
+      <wsHttpBinding>
+        <binding name="WSHttpBinding_IDCServicio" allowCookies="true"
+                 maxReceivedMessageSize="20000000"
+                 maxBufferPoolSize="20000000">
+          <readerQuotas maxDepth="32"
+                 maxArrayLength="200000000"
+                 maxStringContentLength="200000000"/>
+          <security>
+            <message clientCredentialType="UserName" />
+          </security>
+        </binding>
+      </wsHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="http://*:8080/DCServicio.svc"
+        binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IDCServicio"
+        contract="DCServicio.IDCServicio" name="WSHttpBinding_IDCServicio">
+        <identity>
+          <certificate encodedValue="*=" />
+        </identity>
+      </endpoint>
+    </client>
+  </system.serviceModel>
+  <system.web>
+    <membership defaultProvider="ClientAuthenticationMembershipProvider">
+      <providers>
+        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri=""/>
+      </providers>
+    </membership>
+    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
+      <providers>
+        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400"/>
+      </providers>
+    </roleManager>
+  </system.web>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.1"/></startup></configuration>

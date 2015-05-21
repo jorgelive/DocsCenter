@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8def4e78c2674591ba9597c7222afd6e" Name="Diagram1">
+        <EntityTypeShape EntityType="DCModelo.Tipo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DCModelo.Proceso" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="DCModelo.Cuenta" Width="1.5" PointX="5.375" PointY="5.875" />
+        <EntityTypeShape EntityType="DCModelo.DocumentoFile" Width="1.5" PointX="7.375" PointY="5.75" />
+        <EntityTypeShape EntityType="DCModelo.FilePrincipal" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DCModelo.Documento" Width="1.5" PointX="9.625" PointY="2.5" />
+        <AssociationConnector Association="DCModelo.fk_doc_doc_cuenta" />
+        <AssociationConnector Association="DCModelo.fk_doc_doc_proceso" />
+        <AssociationConnector Association="DCModelo.fk_doc_doc_tipo" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

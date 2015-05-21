@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DCModelo.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="CuentaID" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="Nombre" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="PasswordCorreo" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="IndAdministrador" Type="number" Precision="1" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="DocumentoID" />
+          </Key>
+          <Property Name="DocumentoID" Type="number" Precision="15" Scale="0" Nullable="false" />
+          <Property Name="Ano" Type="varchar2" MaxLength="4" Nullable="false" />
+          <Property Name="NumFile" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="NumFileFisico" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="ProcesoID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="TipoID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="Nombre" Type="varchar2" MaxLength="500" Nullable="false" />
+          <Property Name="Nota" Type="varchar2" MaxLength="500" />
+          <Property Name="CuentaID" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="Carpeta" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="Identificador" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="Archivo" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="Sender" Type="varchar2" MaxLength="100" />
+          <Property Name="Reciever" Type="varchar2" MaxLength="500" />
+          <Property Name="FechaHora" Type="date" Nullable="false" />
+          <Property Name="FechaHoraProceso" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proceso">
+          <Key>
+            <PropertyRef Name="ProcesoID" />
+          </Key>
+          <Property Name="ProcesoID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="Nombre" Type="varchar2" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo">
+          <Key>
+            <PropertyRef Name="TipoID" />
+          </Key>
+          <Property Name="TipoID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="Nombre" Type="varchar2" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DOCUMENTACION.DocumentoFile' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="DocumentoFile">
+          <Key>
+            <PropertyRef Name="DocumentoID" />
+            <PropertyRef Name="Ano" />
+            <PropertyRef Name="NumFile" />
+            <PropertyRef Name="NumFileFisico" />
+            <PropertyRef Name="ProcesoID" />
+            <PropertyRef Name="TipoID" />
+            <PropertyRef Name="Nombre" />
+            <PropertyRef Name="CuentaID" />
+            <PropertyRef Name="Carpeta" />
+            <PropertyRef Name="Identificador" />
+            <PropertyRef Name="Archivo" />
+            <PropertyRef Name="FechaHora" />
+            <PropertyRef Name="FechaHoraProceso" />
+            <PropertyRef Name="CodigoCliente" />
+          </Key>
+          <Property Name="DocumentoID" Type="number" Precision="15" Scale="0" Nullable="false" />
+          <Property Name="Ano" Type="varchar2" MaxLength="4" Nullable="false" />
+          <Property Name="NumFile" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="NumFileFisico" Type="varchar2" MaxLength="5" Nullable="false" />
+          <Property Name="AnoFile" Type="varchar2" MaxLength="43" />
+          <Property Name="ProcesoID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="TipoID" Type="number" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="Nombre" Type="varchar2" MaxLength="500" Nullable="false" />
+          <Property Name="Nota" Type="varchar2" MaxLength="500" />
+          <Property Name="CuentaID" Type="varchar2" MaxLength="30" Nullable="false" />
+          <Property Name="Carpeta" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="Identificador" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="Archivo" Type="varchar2" MaxLength="255" Nullable="false" />
+          <Property Name="Sender" Type="varchar2" MaxLength="100" />
+          <Property Name="Reciever" Type="varchar2" MaxLength="500" />
+          <Property Name="FechaHora" Type="date" Nullable="false" />
+          <Property Name="FechaHoraProceso" Type="date" Nullable="false" />
+          <Property Name="NombreFile" Type="varchar2" MaxLength="50" />
+          <Property Name="Mercado" Type="varchar2" MaxLength="50" />
+          <Property Name="NombreCliente" Type="varchar2" MaxLength="50" />
+          <Property Name="CodigoCliente" Type="varchar2" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DOCUMENTACION.FilePrincipal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="FilePrincipal">
+          <Key>
+            <PropertyRef Name="Ano" />
+            <PropertyRef Name="NumFile" />
+            <PropertyRef Name="TipTarifario" />
+          </Key>
+          <Property Name="Ano" Type="varchar2" MaxLength="4" Nullable="false" />
+          <Property Name="NumFile" Type="varchar2" MaxLength="10" Nullable="false" />
+          <Property Name="TipTarifario" Type="varchar2" MaxLength="2" Nullable="false" />
+          <Property Name="NumFileFisico" Type="varchar2" MaxLength="5" />
+          <Property Name="AnoFile" Type="varchar2" MaxLength="10" />
+          <Property Name="Nombre" Type="varchar2" MaxLength="50" />
+          <Property Name="Mercado" Type="varchar2" MaxLength="50" />
+        </EntityType>
+        <Association Name="fk_doc_doc_cuenta">
+          <End Role="Cuenta" Type="Self.Cuenta" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="CuentaID" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="CuentaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_doc_doc_proceso">
+          <End Role="Proceso" Type="Self.Proceso" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proceso">
+              <PropertyRef Name="ProcesoID" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="ProcesoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_doc_doc_tipo">
+          <End Role="Tipo" Type="Self.Tipo" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo">
+              <PropertyRef Name="TipoID" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="TipoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DCModeloStoreContainer">
+          <EntitySet Name="Cuenta" EntityType="Self.Cuenta" Schema="DOCUMENTACION" store:Type="Tables" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" Schema="DOCUMENTACION" store:Type="Tables" />
+          <EntitySet Name="Proceso" EntityType="Self.Proceso" Schema="DOCUMENTACION" store:Type="Tables" />
+          <EntitySet Name="Tipo" EntityType="Self.Tipo" Schema="DOCUMENTACION" store:Type="Tables" />
+          <EntitySet Name="DocumentoFile" EntityType="Self.DocumentoFile" store:Type="Views" store:Schema="DOCUMENTACION">
+            <DefiningQuery>SELECT 
+"DocumentoFile"."DocumentoID" AS "DocumentoID", 
+"DocumentoFile"."Ano" AS "Ano", 
+"DocumentoFile"."NumFile" AS "NumFile", 
+"DocumentoFile"."NumFileFisico" AS "NumFileFisico", 
+"DocumentoFile"."AnoFile" AS "AnoFile", 
+"DocumentoFile"."ProcesoID" AS "ProcesoID", 
+"DocumentoFile"."TipoID" AS "TipoID", 
+"DocumentoFile"."Nombre" AS "Nombre", 
+"DocumentoFile"."Nota" AS "Nota", 
+"DocumentoFile"."CuentaID" AS "CuentaID", 
+"DocumentoFile"."Carpeta" AS "Carpeta", 
+"DocumentoFile"."Identificador" AS "Identificador", 
+"DocumentoFile"."Archivo" AS "Archivo", 
+"DocumentoFile"."Sender" AS "Sender", 
+"DocumentoFile"."Reciever" AS "Reciever", 
+"DocumentoFile"."FechaHora" AS "FechaHora", 
+"DocumentoFile"."FechaHoraProceso" AS "FechaHoraProceso", 
+"DocumentoFile"."NombreFile" AS "NombreFile", 
+"DocumentoFile"."Mercado" AS "Mercado", 
+"DocumentoFile"."NombreCliente" AS "NombreCliente", 
+"DocumentoFile"."CodigoCliente" AS "CodigoCliente"
+FROM "DOCUMENTACION"."DocumentoFile" "DocumentoFile"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FilePrincipal" EntityType="Self.FilePrincipal" store:Type="Views" store:Schema="DOCUMENTACION">
+            <DefiningQuery>SELECT 
+"FilePrincipal"."Ano" AS "Ano", 
+"FilePrincipal"."NumFile" AS "NumFile", 
+"FilePrincipal"."TipTarifario" AS "TipTarifario", 
+"FilePrincipal"."NumFileFisico" AS "NumFileFisico", 
+"FilePrincipal"."AnoFile" AS "AnoFile", 
+"FilePrincipal"."Nombre" AS "Nombre", 
+"FilePrincipal"."Mercado" AS "Mercado"
+FROM "DOCUMENTACION"."FilePrincipal" "FilePrincipal"</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="fk_doc_doc_cuenta" Association="Self.fk_doc_doc_cuenta">
+            <End Role="Cuenta" EntitySet="Cuenta" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_doc_doc_proceso" Association="Self.fk_doc_doc_proceso">
+            <End Role="Proceso" EntitySet="Proceso" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="fk_doc_doc_tipo" Association="Self.fk_doc_doc_tipo">
+            <End Role="Tipo" EntitySet="Tipo" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DCModelo" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Tipo">
+          <Key>
+            <PropertyRef Name="TipoID" />
+          </Key>
+          <Property Name="TipoID" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Documentoes" Relationship="DCModelo.fk_doc_doc_tipo" FromRole="Tipo" ToRole="Documento" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tipoes" EntityType="Self.Tipo" />
+          <EntitySet Name="Procesoes" EntityType="DCModelo.Proceso" />
+          <EntitySet Name="Cuentas" EntityType="DCModelo.Cuenta" />
+          <EntitySet Name="DocumentoFiles" EntityType="DCModelo.DocumentoFile" />
+          <EntitySet Name="FilePrincipals" EntityType="DCModelo.FilePrincipal" />
+          <EntitySet Name="Documentoes" EntityType="DCModelo.Documento" />
+          <AssociationSet Name="fk_doc_doc_cuenta" Association="DCModelo.fk_doc_doc_cuenta">
+            <End Role="Cuenta" EntitySet="Cuentas" />
+            <End Role="Documento" EntitySet="Documentoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_doc_doc_proceso" Association="DCModelo.fk_doc_doc_proceso">
+            <End Role="Proceso" EntitySet="Procesoes" />
+            <End Role="Documento" EntitySet="Documentoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_doc_doc_tipo" Association="DCModelo.fk_doc_doc_tipo">
+            <End Role="Tipo" EntitySet="Tipoes" />
+            <End Role="Documento" EntitySet="Documentoes" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Proceso">
+          <Key>
+            <PropertyRef Name="ProcesoID" />
+          </Key>
+          <Property Name="ProcesoID" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Documentoes" Relationship="DCModelo.fk_doc_doc_proceso" FromRole="Proceso" ToRole="Documento" />
+        </EntityType>
+        <EntityType Name="Cuenta">
+          <Key>
+            <PropertyRef Name="CuentaID" />
+          </Key>
+          <Property Name="CuentaID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordCorreo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IndAdministrador" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Documentoes" Relationship="DCModelo.fk_doc_doc_cuenta" FromRole="Cuenta" ToRole="Documento" />
+        </EntityType>
+        <EntityType Name="DocumentoFile">
+          <Key>
+            <PropertyRef Name="DocumentoID" />
+            <PropertyRef Name="Ano" />
+            <PropertyRef Name="NumFile" />
+            <PropertyRef Name="NumFileFisico" />
+            <PropertyRef Name="ProcesoID" />
+            <PropertyRef Name="TipoID" />
+            <PropertyRef Name="Nombre" />
+            <PropertyRef Name="CuentaID" />
+            <PropertyRef Name="Carpeta" />
+            <PropertyRef Name="Identificador" />
+            <PropertyRef Name="Archivo" />
+            <PropertyRef Name="FechaHora" />
+            <PropertyRef Name="FechaHoraProceso" />
+            <PropertyRef Name="CodigoCliente" />
+          </Key>
+          <Property Name="DocumentoID" Type="Int64" Nullable="false" />
+          <Property Name="Ano" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="NumFile" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumFileFisico" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ProcesoID" Type="Int16" Nullable="false" />
+          <Property Name="TipoID" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Nota" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CuentaID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Carpeta" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Identificador" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Archivo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Sender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Reciever" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FechaHora" Type="DateTime" Nullable="false" />
+          <Property Name="FechaHoraProceso" Type="DateTime" Nullable="false" />
+          <Property Name="NombreFile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mercado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoCliente" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AnoFile" Type="String" MaxLength="43" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FilePrincipal">
+          <Key>
+            <PropertyRef Name="Ano" />
+            <PropertyRef Name="NumFile" />
+            <PropertyRef Name="TipTarifario" />
+          </Key>
+          <Property Name="Ano" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="NumFile" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TipTarifario" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="NumFileFisico" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="AnoFile" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mercado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="DocumentoID" />
+          </Key>
+          <Property Name="DocumentoID" Type="Int64" Nullable="false" />
+          <Property Name="Ano" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="NumFile" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumFileFisico" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ProcesoID" Type="Int16" Nullable="false" />
+          <Property Name="TipoID" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Nota" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CuentaID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Carpeta" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Identificador" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Archivo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Sender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Reciever" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FechaHora" Type="DateTime" Nullable="false" />
+          <Property Name="FechaHoraProceso" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Cuenta" Relationship="DCModelo.fk_doc_doc_cuenta" FromRole="Documento" ToRole="Cuenta" />
+          <NavigationProperty Name="Proceso" Relationship="DCModelo.fk_doc_doc_proceso" FromRole="Documento" ToRole="Proceso" />
+          <NavigationProperty Name="Tipo" Relationship="DCModelo.fk_doc_doc_tipo" FromRole="Documento" ToRole="Tipo" />
+        </EntityType>
+        <Association Name="fk_doc_doc_cuenta">
+          <End Type="DCModelo.Cuenta" Role="Cuenta" Multiplicity="1" />
+          <End Type="DCModelo.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cuenta">
+              <PropertyRef Name="CuentaID" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="CuentaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_doc_doc_proceso">
+          <End Type="DCModelo.Proceso" Role="Proceso" Multiplicity="1" />
+          <End Type="DCModelo.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proceso">
+              <PropertyRef Name="ProcesoID" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="ProcesoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_doc_doc_tipo">
+          <End Type="DCModelo.Tipo" Role="Tipo" Multiplicity="1" />
+          <End Type="DCModelo.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo">
+              <PropertyRef Name="TipoID" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="TipoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DCModeloStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Tipoes">
+            <EntityTypeMapping TypeName="DCModelo.Tipo">
+              <MappingFragment StoreEntitySet="Tipo">
+                <ScalarProperty Name="TipoID" ColumnName="TipoID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Procesoes">
+            <EntityTypeMapping TypeName="DCModelo.Proceso">
+              <MappingFragment StoreEntitySet="Proceso">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ProcesoID" ColumnName="ProcesoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuentas">
+            <EntityTypeMapping TypeName="DCModelo.Cuenta">
+              <MappingFragment StoreEntitySet="Cuenta">
+                <ScalarProperty Name="IndAdministrador" ColumnName="IndAdministrador" />
+                <ScalarProperty Name="PasswordCorreo" ColumnName="PasswordCorreo" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentoFiles">
+            <EntityTypeMapping TypeName="DCModelo.DocumentoFile">
+              <MappingFragment StoreEntitySet="DocumentoFile">
+                <ScalarProperty Name="AnoFile" ColumnName="AnoFile" />
+                <ScalarProperty Name="CodigoCliente" ColumnName="CodigoCliente" />
+                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+                <ScalarProperty Name="Mercado" ColumnName="Mercado" />
+                <ScalarProperty Name="NombreFile" ColumnName="NombreFile" />
+                <ScalarProperty Name="FechaHoraProceso" ColumnName="FechaHoraProceso" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Reciever" ColumnName="Reciever" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+                <ScalarProperty Name="Carpeta" ColumnName="Carpeta" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="TipoID" ColumnName="TipoID" />
+                <ScalarProperty Name="ProcesoID" ColumnName="ProcesoID" />
+                <ScalarProperty Name="NumFileFisico" ColumnName="NumFileFisico" />
+                <ScalarProperty Name="NumFile" ColumnName="NumFile" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+                <ScalarProperty Name="DocumentoID" ColumnName="DocumentoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FilePrincipals">
+            <EntityTypeMapping TypeName="DCModelo.FilePrincipal">
+              <MappingFragment StoreEntitySet="FilePrincipal">
+                <ScalarProperty Name="Mercado" ColumnName="Mercado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="AnoFile" ColumnName="AnoFile" />
+                <ScalarProperty Name="NumFileFisico" ColumnName="NumFileFisico" />
+                <ScalarProperty Name="TipTarifario" ColumnName="TipTarifario" />
+                <ScalarProperty Name="NumFile" ColumnName="NumFile" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documentoes">
+            <EntityTypeMapping TypeName="DCModelo.Documento">
+              <MappingFragment StoreEntitySet="Documento">
+                <ScalarProperty Name="FechaHoraProceso" ColumnName="FechaHoraProceso" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Reciever" ColumnName="Reciever" />
+                <ScalarProperty Name="Sender" ColumnName="Sender" />
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+                <ScalarProperty Name="Carpeta" ColumnName="Carpeta" />
+                <ScalarProperty Name="CuentaID" ColumnName="CuentaID" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="TipoID" ColumnName="TipoID" />
+                <ScalarProperty Name="ProcesoID" ColumnName="ProcesoID" />
+                <ScalarProperty Name="NumFileFisico" ColumnName="NumFileFisico" />
+                <ScalarProperty Name="NumFile" ColumnName="NumFile" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+                <ScalarProperty Name="DocumentoID" ColumnName="DocumentoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

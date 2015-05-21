@@ -1,0 +1,166 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="DCModelo" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="Tipo">
+        <Key>
+          <PropertyRef Name="TipoID" />
+        </Key>
+        <Property Name="TipoID" Type="Edm.Int16" Nullable="false" />
+        <Property Name="Nombre" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="Documentoes" Relationship="DCModelo.fk_doc_doc_tipo" ToRole="Documento" FromRole="Tipo" />
+      </EntityType>
+      <EntityType Name="Proceso">
+        <Key>
+          <PropertyRef Name="ProcesoID" />
+        </Key>
+        <Property Name="ProcesoID" Type="Edm.Int16" Nullable="false" />
+        <Property Name="Nombre" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="Documentoes" Relationship="DCModelo.fk_doc_doc_proceso" ToRole="Documento" FromRole="Proceso" />
+      </EntityType>
+      <EntityType Name="Cuenta">
+        <Key>
+          <PropertyRef Name="CuentaID" />
+        </Key>
+        <Property Name="CuentaID" Type="Edm.String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        <Property Name="Nombre" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="Password" Type="Edm.String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        <Property Name="PasswordCorreo" Type="Edm.String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        <Property Name="IndAdministrador" Type="Edm.Int16" Nullable="false" />
+        <NavigationProperty Name="Documentoes" Relationship="DCModelo.fk_doc_doc_cuenta" ToRole="Documento" FromRole="Cuenta" />
+      </EntityType>
+      <EntityType Name="DocumentoFile">
+        <Key>
+          <PropertyRef Name="Ano" />
+          <PropertyRef Name="Archivo" />
+          <PropertyRef Name="Carpeta" />
+          <PropertyRef Name="CodigoCliente" />
+          <PropertyRef Name="CuentaID" />
+          <PropertyRef Name="DocumentoID" />
+          <PropertyRef Name="FechaHora" />
+          <PropertyRef Name="FechaHoraProceso" />
+          <PropertyRef Name="Identificador" />
+          <PropertyRef Name="Nombre" />
+          <PropertyRef Name="NumFile" />
+          <PropertyRef Name="NumFileFisico" />
+          <PropertyRef Name="ProcesoID" />
+          <PropertyRef Name="TipoID" />
+        </Key>
+        <Property Name="DocumentoID" Type="Edm.Int64" Nullable="false" />
+        <Property Name="Ano" Type="Edm.String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+        <Property Name="NumFile" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        <Property Name="NumFileFisico" Type="Edm.String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+        <Property Name="ProcesoID" Type="Edm.Int16" Nullable="false" />
+        <Property Name="TipoID" Type="Edm.Int16" Nullable="false" />
+        <Property Name="Nombre" Type="Edm.String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        <Property Name="Nota" Type="Edm.String" MaxLength="500" FixedLength="false" Unicode="false" />
+        <Property Name="CuentaID" Type="Edm.String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        <Property Name="Carpeta" Type="Edm.String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        <Property Name="Identificador" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="Archivo" Type="Edm.String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        <Property Name="Sender" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="Reciever" Type="Edm.String" MaxLength="500" FixedLength="false" Unicode="false" />
+        <Property Name="FechaHora" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="FechaHoraProceso" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="NombreFile" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="Mercado" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="NombreCliente" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CodigoCliente" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        <Property Name="AnoFile" Type="Edm.String" MaxLength="43" FixedLength="false" Unicode="false" />
+      </EntityType>
+      <EntityType Name="FilePrincipal">
+        <Key>
+          <PropertyRef Name="Ano" />
+          <PropertyRef Name="NumFile" />
+          <PropertyRef Name="TipTarifario" />
+        </Key>
+        <Property Name="Ano" Type="Edm.String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+        <Property Name="NumFile" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        <Property Name="TipTarifario" Type="Edm.String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+        <Property Name="NumFileFisico" Type="Edm.String" MaxLength="5" FixedLength="false" Unicode="false" />
+        <Property Name="AnoFile" Type="Edm.String" MaxLength="10" FixedLength="false" Unicode="false" />
+        <Property Name="Nombre" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="Mercado" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+      </EntityType>
+      <EntityType Name="Documento">
+        <Key>
+          <PropertyRef Name="DocumentoID" />
+        </Key>
+        <Property Name="DocumentoID" Type="Edm.Int64" Nullable="false" />
+        <Property Name="Ano" Type="Edm.String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+        <Property Name="NumFile" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        <Property Name="NumFileFisico" Type="Edm.String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+        <Property Name="ProcesoID" Type="Edm.Int16" Nullable="false" />
+        <Property Name="TipoID" Type="Edm.Int16" Nullable="false" />
+        <Property Name="Nombre" Type="Edm.String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        <Property Name="Nota" Type="Edm.String" MaxLength="500" FixedLength="false" Unicode="false" />
+        <Property Name="CuentaID" Type="Edm.String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        <Property Name="Carpeta" Type="Edm.String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        <Property Name="Identificador" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="Archivo" Type="Edm.String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        <Property Name="Sender" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <Property Name="Reciever" Type="Edm.String" MaxLength="500" FixedLength="false" Unicode="false" />
+        <Property Name="FechaHora" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="FechaHoraProceso" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Cuenta" Relationship="DCModelo.fk_doc_doc_cuenta" ToRole="Cuenta" FromRole="Documento" />
+        <NavigationProperty Name="Proceso" Relationship="DCModelo.fk_doc_doc_proceso" ToRole="Proceso" FromRole="Documento" />
+        <NavigationProperty Name="Tipo" Relationship="DCModelo.fk_doc_doc_tipo" ToRole="Tipo" FromRole="Documento" />
+      </EntityType>
+      <Association Name="fk_doc_doc_tipo">
+        <End Type="DCModelo.Tipo" Role="Tipo" Multiplicity="1" />
+        <End Type="DCModelo.Documento" Role="Documento" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Tipo">
+            <PropertyRef Name="TipoID" />
+          </Principal>
+          <Dependent Role="Documento">
+            <PropertyRef Name="TipoID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="fk_doc_doc_proceso">
+        <End Type="DCModelo.Proceso" Role="Proceso" Multiplicity="1" />
+        <End Type="DCModelo.Documento" Role="Documento" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Proceso">
+            <PropertyRef Name="ProcesoID" />
+          </Principal>
+          <Dependent Role="Documento">
+            <PropertyRef Name="ProcesoID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="fk_doc_doc_cuenta">
+        <End Type="DCModelo.Cuenta" Role="Cuenta" Multiplicity="1" />
+        <End Type="DCModelo.Documento" Role="Documento" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Cuenta">
+            <PropertyRef Name="CuentaID" />
+          </Principal>
+          <Dependent Role="Documento">
+            <PropertyRef Name="CuentaID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <EntityContainer Name="Entities" m:IsDefaultEntityContainer="true" p6:LazyLoadingEnabled="true" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntitySet Name="Tipoes" EntityType="DCModelo.Tipo" />
+        <EntitySet Name="Procesoes" EntityType="DCModelo.Proceso" />
+        <EntitySet Name="Cuentas" EntityType="DCModelo.Cuenta" />
+        <EntitySet Name="DocumentoFiles" EntityType="DCModelo.DocumentoFile" />
+        <EntitySet Name="FilePrincipals" EntityType="DCModelo.FilePrincipal" />
+        <EntitySet Name="Documentoes" EntityType="DCModelo.Documento" />
+        <AssociationSet Name="fk_doc_doc_tipo" Association="DCModelo.fk_doc_doc_tipo">
+          <End Role="Tipo" EntitySet="Tipoes" />
+          <End Role="Documento" EntitySet="Documentoes" />
+        </AssociationSet>
+        <AssociationSet Name="fk_doc_doc_proceso" Association="DCModelo.fk_doc_doc_proceso">
+          <End Role="Proceso" EntitySet="Procesoes" />
+          <End Role="Documento" EntitySet="Documentoes" />
+        </AssociationSet>
+        <AssociationSet Name="fk_doc_doc_cuenta" Association="DCModelo.fk_doc_doc_cuenta">
+          <End Role="Cuenta" EntitySet="Cuentas" />
+          <End Role="Documento" EntitySet="Documentoes" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

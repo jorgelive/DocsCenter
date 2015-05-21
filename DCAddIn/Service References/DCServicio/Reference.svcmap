@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b39c41a9-4d87-4f85-8478-e0a2fc09cd2e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies>
+      <ReferencedAssembly AssemblyName="System.Data" />
+    </ReferencedAssemblies>
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://vipacdc.vipac.pe:8080/DCServicio.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DCServicio.xsd" MetadataType="Schema" ID="0c250e0e-5f00-428e-a14c-a971ce7734eb" SourceId="1" SourceUrl="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd1" />
+    <MetadataFile FileName="DCServicio1.xsd" MetadataType="Schema" ID="c074ff15-7b75-43b1-bda3-ff5dfdd4f14c" SourceId="1" SourceUrl="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd3" />
+    <MetadataFile FileName="DCServicio2.xsd" MetadataType="Schema" ID="5b5ac0e1-c676-4a93-b88a-ffa1a73a03f1" SourceId="1" SourceUrl="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd4" />
+    <MetadataFile FileName="DCServicio.wsdl" MetadataType="Wsdl" ID="960020a8-47ca-4d61-b369-192ac2cb61ee" SourceId="1" SourceUrl="http://vipacdc.vipac.pe:8080/DCServicio.svc?wsdl" />
+    <MetadataFile FileName="DCServicio.disco" MetadataType="Disco" ID="5cb26fc8-43a5-4e7f-b1c0-7de09d7818c8" SourceId="1" SourceUrl="http://vipacdc.vipac.pe:8080/DCServicio.svc?disco" />
+    <MetadataFile FileName="DCServicio3.xsd" MetadataType="Schema" ID="3b9da698-bbbd-4a92-b9c2-a7fb33980ff5" SourceId="1" SourceUrl="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd0" />
+    <MetadataFile FileName="DCServicio4.xsd" MetadataType="Schema" ID="b78f2c50-c54c-4de5-ad99-0b4c2d741ed7" SourceId="1" SourceUrl="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

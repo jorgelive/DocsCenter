@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+  <ribbon>
+    <tabs>
+      <tab idMso="TabMail">
+        <group id="ShareCenter"
+               label="Share Center">
+          <button id="DCMostrarBoton" getLabel="DCMostrarBoton_GetLabel"
+                  imageMso="WindowsArrangeAll" showImage="true" size="large"
+            screentip="Muestra el panel" onAction="DCMostrarBoton_Click"
+            supertip="Muestra el panel si este se encuentra cerrado."/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+  <contextMenus>
+    <contextMenu idMso="ContextMenuMailItem">
+      <button id="DCEnviarBoton" imageMso="GoTo" onAction="DCEnviarBoton_Click" getLabel="DCEnviarBoton_GetLabel"/>
+    </contextMenu>
+    <contextMenu idMso="ContextMenuMultipleItems">
+      <button id="DCEnviarBotonMultiple" imageMso="GoTo" getLabel="DCEnviarBoton_GetLabel" onAction="DCEnviarBoton_Click"/>
+    </contextMenu>
+
+
+  </contextMenus>
+  
+
+</customUI>
+

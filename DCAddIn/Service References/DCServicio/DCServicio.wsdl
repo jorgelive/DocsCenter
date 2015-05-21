@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DCServicio" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:ProtectionToken>
+              <wsp:Policy>
+                <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                  <wsp:Policy>
+                    <sp:RequireDerivedKeys />
+                    <sp:BootstrapPolicy>
+                      <wsp:Policy>
+                        <sp:SignedParts>
+                          <sp:Body />
+                          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+                          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+                        </sp:SignedParts>
+                        <sp:EncryptedParts>
+                          <sp:Body />
+                        </sp:EncryptedParts>
+                        <sp:SymmetricBinding>
+                          <wsp:Policy>
+                            <sp:ProtectionToken>
+                              <wsp:Policy>
+                                <mssp:SslContextToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient" xmlns:mssp="http://schemas.microsoft.com/ws/2005/07/securitypolicy">
+                                  <wsp:Policy>
+                                    <sp:RequireDerivedKeys />
+                                  </wsp:Policy>
+                                </mssp:SslContextToken>
+                              </wsp:Policy>
+                            </sp:ProtectionToken>
+                            <sp:AlgorithmSuite>
+                              <wsp:Policy>
+                                <sp:Basic256 />
+                              </wsp:Policy>
+                            </sp:AlgorithmSuite>
+                            <sp:Layout>
+                              <wsp:Policy>
+                                <sp:Strict />
+                              </wsp:Policy>
+                            </sp:Layout>
+                            <sp:IncludeTimestamp />
+                            <sp:EncryptSignature />
+                            <sp:OnlySignEntireHeadersAndBody />
+                          </wsp:Policy>
+                        </sp:SymmetricBinding>
+                        <sp:SignedSupportingTokens>
+                          <wsp:Policy>
+                            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                              <wsp:Policy>
+                                <sp:WssUsernameToken10 />
+                              </wsp:Policy>
+                            </sp:UsernameToken>
+                          </wsp:Policy>
+                        </sp:SignedSupportingTokens>
+                        <sp:Wss11>
+                          <wsp:Policy />
+                        </sp:Wss11>
+                        <sp:Trust10>
+                          <wsp:Policy>
+                            <sp:MustSupportIssuedTokens />
+                            <sp:RequireClientEntropy />
+                            <sp:RequireServerEntropy />
+                          </wsp:Policy>
+                        </sp:Trust10>
+                      </wsp:Policy>
+                    </sp:BootstrapPolicy>
+                  </wsp:Policy>
+                </sp:SecureConversationToken>
+              </wsp:Policy>
+            </sp:ProtectionToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+            <sp:EncryptSignature />
+            <sp:OnlySignEntireHeadersAndBody />
+          </wsp:Policy>
+        </sp:SymmetricBinding>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy />
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens />
+            <sp:RequireClientEntropy />
+            <sp:RequireServerEntropy />
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_GetFilePrincipalByAnoFile_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_GetFilePrincipalByAnoFile_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_GetTipos_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_GetTipos_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_GetProcesos_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_GetProcesos_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_ProcesarCorreos_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_ProcesarCorreos_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_ProcesarArchivos_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_ProcesarArchivos_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_BorrarDocumento_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_BorrarDocumento_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_EditarDocumento_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_EditarDocumento_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_DescargarDCArchivo_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_DescargarDCArchivo_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_EsAdministrador_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IDCServicio_EsAdministrador_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DCServicio" />
+      <xsd:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+      <xsd:import schemaLocation="http://vipacdc.vipac.pe:8080/DCServicio.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IDCServicio_GetFilePrincipalByAnoFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFilePrincipalByAnoFile" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_GetFilePrincipalByAnoFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFilePrincipalByAnoFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_GetTipos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTipos" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_GetTipos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTiposResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_GetProcesos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProcesos" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_GetProcesos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProcesosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_ProcesarCorreos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarCorreos" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_ProcesarCorreos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarCorreosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_ProcesarArchivos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarArchivos" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_ProcesarArchivos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesarArchivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_BorrarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_BorrarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_EditarDocumento_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditarDocumento" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_EditarDocumento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditarDocumentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_DescargarDCArchivo_InputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarDCArchivo" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_DescargarDCArchivo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DescargarDCArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_EsAdministrador_InputMessage">
+    <wsdl:part name="parameters" element="tns:EsAdministrador" />
+  </wsdl:message>
+  <wsdl:message name="IDCServicio_EsAdministrador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EsAdministradorResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IDCServicio">
+    <wsdl:operation name="GetFilePrincipalByAnoFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/GetFilePrincipalByAnoFile" message="tns:IDCServicio_GetFilePrincipalByAnoFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/GetFilePrincipalByAnoFileResponse" message="tns:IDCServicio_GetFilePrincipalByAnoFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTipos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/GetTipos" message="tns:IDCServicio_GetTipos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/GetTiposResponse" message="tns:IDCServicio_GetTipos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProcesos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/GetProcesos" message="tns:IDCServicio_GetProcesos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/GetProcesosResponse" message="tns:IDCServicio_GetProcesos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarCorreos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/ProcesarCorreos" message="tns:IDCServicio_ProcesarCorreos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/ProcesarCorreosResponse" message="tns:IDCServicio_ProcesarCorreos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarArchivos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/ProcesarArchivos" message="tns:IDCServicio_ProcesarArchivos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/ProcesarArchivosResponse" message="tns:IDCServicio_ProcesarArchivos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/BorrarDocumento" message="tns:IDCServicio_BorrarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/BorrarDocumentoResponse" message="tns:IDCServicio_BorrarDocumento_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditarDocumento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/EditarDocumento" message="tns:IDCServicio_EditarDocumento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/EditarDocumentoResponse" message="tns:IDCServicio_EditarDocumento_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DescargarDCArchivo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/DescargarDCArchivo" message="tns:IDCServicio_DescargarDCArchivo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/DescargarDCArchivoResponse" message="tns:IDCServicio_DescargarDCArchivo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EsAdministrador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDCServicio/EsAdministrador" message="tns:IDCServicio_EsAdministrador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDCServicio/EsAdministradorResponse" message="tns:IDCServicio_EsAdministrador_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IDCServicio" type="tns:IDCServicio">
+    <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetFilePrincipalByAnoFile">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/GetFilePrincipalByAnoFile" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_GetFilePrincipalByAnoFile_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_GetFilePrincipalByAnoFile_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTipos">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/GetTipos" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_GetTipos_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_GetTipos_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProcesos">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/GetProcesos" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_GetProcesos_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_GetProcesos_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarCorreos">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/ProcesarCorreos" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_ProcesarCorreos_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_ProcesarCorreos_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesarArchivos">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/ProcesarArchivos" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_ProcesarArchivos_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_ProcesarArchivos_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/BorrarDocumento" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_BorrarDocumento_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_BorrarDocumento_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditarDocumento">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/EditarDocumento" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_EditarDocumento_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_EditarDocumento_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DescargarDCArchivo">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/DescargarDCArchivo" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_DescargarDCArchivo_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_DescargarDCArchivo_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EsAdministrador">
+      <soap12:operation soapAction="http://tempuri.org/IDCServicio/EsAdministrador" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_EsAdministrador_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IDCServicio_EsAdministrador_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DCServicio">
+    <wsdl:port name="WSHttpBinding_IDCServicio" binding="tns:WSHttpBinding_IDCServicio">
+      <soap12:address location="http://vipacdc.vipac.pe:8080/DCServicio.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://vipacdc.vipac.pe:8080/DCServicio.svc</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <X509Data>
+              <X509Certificate>MIIEvjCCAqagAwIBAgIQexA3ZIf2Y7pOGBnPtyEASDANBgkqhkiG9w0BAQUFADAbMRkwFwYDVQQDExB2aXBhY2RjLnZpcGFjLnBlMB4XDTE0MTExMTA1MDAwMFoXDTI0MTExODA1MDAwMFowGzEZMBcGA1UEAxMQdmlwYWNkYy52aXBhYy5wZTCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALqV5tlB3FubYj9bPIESJok2R/udZEjc21CEKaeyTRKbV4Ok1ojK4edXI+r3wngQZBejD31YcA40+jOhf67Rzmq+GdR3/fbZnbuuP9+qV3MwGtVEA3Lp2vlxcap5RPXfvZl8zfnwVyc8ruSzY8M9GkoxKa2SdJpozdwxpgeVtzBxHeyDytSLJjKKj+lf1NQMbBpPYAmSHf6w33HNriHSY65EZC43NlqEcTeo5UiatzymV1hojL1ICRatGv8AT461MgDaSgg19ALIssFERvSbro4p9IYF4/pC5w17MEux3EA0bRirqrne815rv7G6V7Fw/sdtcDzg5s6WT1iOXhvELn0LYHCSTFA4aBg12c1psmuH971XR7wKxEL1bZhG4M/HZRo15mxKhoCdLrJ+Wgv0ygki4hSA4GEirmWxd+ztSND3zndTLetvrCs5MXamCpY5G6hvKm9fiFNYNjzuHSR4fqOSpUoRNmXf9QnjU+I/euoRXvqMx4bBbiXyBZDtdMaGeCiZ4cLdBGzpzphncHbgBRUKN7Cs8Pf6kN0RmDRwc9m+q5+lZahZxoj7ZA6KIjt79gBrZ8Twrkqz0u0EBsThBWLN5HupA1Sn2UdyfyfpEANiw0fLazVlVQ3WNU0cdXTIe/NRJPV3irCh+icq1oY3LvVhfiApqctz78FwefTFtHcXAgMBAAEwDQYJKoZIhvcNAQEFBQADggIBAFwwGgGbRVhwlZoaUw28iiqcjVAPq088pe8fkYqT4VW083Ks2/WIPvR9i15CicVcqhIhPOWKVjIh3fMW1hpCel9uD5wTVQ65T2oPk1SwbixZBbr33N7xw4jG96FU9EPVwf0Mn7jLbOUwJMa0XOFGpHBFrLygrtKj4GloqpFJ8Ly9nDQ5Qu2gW76w3NvSqasbSdHhrC3QQatxTeOg2JIHxTRWMw4YNoHoJajFubtkhEGH5pQgrLZLficeuyQjr9rBJppn2K1QTqwohRyKxnuy6bgkHFTNyuYcbZpzRz5WseKhKJ5ZSCltJUr5MMF18K7mgu3vgqumsPHUjWHw96wWgdzei6PyzfjpkJPiZzrR5SnAWNaAVXLPO8B9j5/911e+OMIy4kGLVfoaMaKDSAR1Iw5wKgwcYWKxRJR7lrpxKKbE9Tfo5ArjBr9RJG+rzZ/ZafNnfA0VpucNFMV1VwEON7LqzQlm8PzqVZJXOcSCRdsrWxQozFIj1ieNTQiMPY6JfWVQyVMmw9MfQKkjR7u4DuVxQgbMNtrMOtX5I44SR3luQLgS3hRaMLK+h8DrVVsMxJiwQ3MlZlJVPJvJDnASGlnZo6DB6DAt6o1k+BDwR+FqORb34Qt1TyKAykpo2HzfrvoJux4FtppoX3uTxYA2ts6VSW+r0zcfjEZiFyobHVYd</X509Certificate>
+            </X509Data>
+          </KeyInfo>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
