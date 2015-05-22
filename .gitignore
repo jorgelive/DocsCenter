@@ -12,3 +12,4 @@ web*config
 /Consola
 /DCServicio/App_Data
 /packages
+/DCAddIn/Service References

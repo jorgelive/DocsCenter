@@ -119,74 +119,64 @@ namespace DCServicio
             return resultado;
         }
 
-        public List<int> ProcesarArchivos(DataTable tabla)
+        public List<int> ProcesarArchivos(List<InfoArchivo> listaInformacion)
         {
 
             List<int> resultado = new List<int>();
 
-            foreach (DataRow fila in tabla.Rows)
+            foreach (InfoArchivo informacion in listaInformacion)
             {
-                bool correcto = GuardarArchivoDB(fila);
+
+                bool correcto = GuardarArchivoDB(informacion);
+
                 if (correcto == true)
                 {
-                    dynamic ID = fila["ID"];
-                    resultado.Add(ID);
+                    resultado.Add(informacion.id);
                 }
             }   
             
             return resultado;
         }
 
-        private bool GuardarArchivoDB(DataRow fila)
+        public int ProcesarArchivoRemoto(InfoArchivo informacion, byte[] contenido)
         {
-          
-            dynamic procesoID = fila["ProcesoID"];
-            dynamic nombre = fila["Nombre"];
-            dynamic nota = fila["Nota"];
-            dynamic tipoID = fila["TipoID"];
-            dynamic cuentaID = fila["CuentaID"];
-            dynamic carpeta = fila["Carpeta"];
-            dynamic identificador = fila["Identificador"];
-            dynamic ano = fila["Ano"];
-            dynamic numFile = fila["NumFile"];
-            dynamic numFileFisico = fila["NumFileFisico"];
-            dynamic archivo = fila["Archivo"];
-            dynamic sender = fila["Sender"];
-            dynamic reciever = fila["Reciever"];
-            dynamic fechaHora = fila["FechaHora"];
-            dynamic fechaHoraProceso = fila["FechaHoraProceso"];
+            int resultado = -1;
+
+            if (EscribirArchivoFS(informacion.archivo, informacion.fechaHoraProceso, contenido))
+            {
+                if (GuardarArchivoDB(informacion))
+                {
+                    resultado = informacion.id;
+                }
+            }
+
+            return resultado;
+        }
+
+        private bool GuardarArchivoDB(InfoArchivo informacion)
+        {
 
             DCModelo.Entities contexto;
             DCModelo.Documento documento = new DCModelo.Documento();
             try
             {
-                documento.ProcesoID = procesoID;
-                documento.Nombre = nombre;
-                documento.TipoID = tipoID;
-                documento.CuentaID = cuentaID;
-                documento.Carpeta = carpeta;
-                documento.Identificador = identificador;
-                documento.Archivo = archivo;
-                if (!DBNull.Value.Equals(nota))
-                {
-                    documento.Nota = nota;
-                }
-                documento.Ano = ano;
-                documento.NumFile = numFile;
-                documento.NumFileFisico = numFileFisico;
-                if (!DBNull.Value.Equals(sender))
-                {
-                    documento.Sender = sender;
-                }
-                if (!DBNull.Value.Equals(reciever))
-                {
-                    documento.Reciever = reciever;
-                }
-                documento.FechaHora = fechaHora;
-                documento.FechaHoraProceso = fechaHoraProceso;
+                documento.ProcesoID = informacion.procesoID;
+                documento.Nombre = informacion.nombre;
+                documento.TipoID = informacion.tipoID;
+                documento.CuentaID = informacion.cuentaID;
+                documento.Carpeta = informacion.carpeta;
+                documento.Identificador = informacion.identificador;
+                documento.Archivo = informacion.archivo;
+                documento.Nota = informacion.nota;
+                documento.Ano = informacion.ano;
+                documento.NumFile = informacion.numFile;
+                documento.NumFileFisico = informacion.numFileFisico;
+                documento.Sender = informacion.sender;
+                documento.Reciever = informacion.reciever;
+                documento.FechaHora = informacion.fechaHora;
+                documento.FechaHoraProceso = informacion.fechaHoraProceso;
                 using (contexto = new DCModelo.Entities())
                 {
-
                     contexto.Documentoes.Add(documento);
                     contexto.SaveChanges();
                 }
@@ -199,7 +189,6 @@ namespace DCServicio
             }
             
         }
-
 
         private bool GuardarCorreoDB(DataRow filaRecibida, DataRow filaEnviada)
         {
@@ -359,7 +348,6 @@ namespace DCServicio
 
         }
 
-
         private bool EscribirArchivoFS(string nombre, DateTime fecha, byte[] contenido){
 
             string rutaBase = "\\\\" + ConfigurationManager.AppSettings["fileServer"].ToString() + "\\" + ConfigurationManager.AppSettings["servidorCarpeta"].ToString();
@@ -418,7 +406,6 @@ namespace DCServicio
                     {
                         
                     }
-                    
                 }
             }
 
@@ -443,7 +430,6 @@ namespace DCServicio
                 return false;
             }
         }
-
 
         public string GetPath(string nombre, DateTime fecha, string fileserver)
         {
@@ -500,7 +486,6 @@ namespace DCServicio
                 return false;
             }
          }
-
 
         public bool EditarDocumento(int documentoID, List<object> datos)
         {

@@ -28,7 +28,7 @@ namespace DCServicio
         List<int> ProcesarCorreos(List<DataTable> tablas);
 
         [OperationContract]
-        List<int> ProcesarArchivos(DataTable tabla);
+        List<int> ProcesarArchivos(List<InfoArchivo> listaInformacion);
 
         [OperationContract]
         bool BorrarDocumento(int documentoID);
@@ -38,6 +38,9 @@ namespace DCServicio
 
         [OperationContract]
         DCArchivo DescargarDCArchivo(int documentoID);
+
+        [OperationContract]
+        int ProcesarArchivoRemoto(InfoArchivo informacion, byte[] contenido);
 
         [OperationContract]
         bool EsAdministrador(string cuentaID);
@@ -102,6 +105,59 @@ namespace DCServicio
 
         [DataMember]
         public byte[] Data { get; set; }
+    }
+
+    [DataContract]
+    public class InfoArchivo
+    {
+        [DataMember]
+        public int id { get; set; }
+        
+        [DataMember]
+        public short procesoID { get; set; }
+
+        [DataMember]
+        public string nombre { get; set; }
+
+        [DataMember]
+        public string nota { get; set; }
+
+        [DataMember]
+        public short tipoID { get; set; }
+
+        [DataMember]
+        public string cuentaID { get; set; }
+
+        [DataMember]
+        public string carpeta { get; set; }
+
+        [DataMember]
+        public string identificador { get; set; }
+
+        [DataMember]
+        public string ano { get; set; }
+
+        [DataMember]
+        public string numFile { get; set; }
+
+        [DataMember]
+        public string numFileFisico { get; set; }
+
+        [DataMember]
+        public string archivo { get; set; }
+
+        [DataMember]
+        public string sender { get; set; }
+
+        [DataMember]
+        public string reciever { get; set; }
+
+        [DataMember]
+        public DateTime fechaHora { get; set; }
+
+        [DataMember]
+        public DateTime fechaHoraProceso { get; set; }
+
     }
 
 

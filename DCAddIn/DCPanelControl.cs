@@ -20,8 +20,6 @@ using System.ServiceModel.Security;
 
 namespace DCAddIn
 {
-
-
     public partial class DCPanelControl : UserControl
     {
         
@@ -175,82 +173,149 @@ namespace DCAddIn
             
             string servidorIP = Globals.ThisAddIn.CurrentServer;
 
+            DCServicio.DCServicioClient cliente = Globals.ThisAddIn.ClienteServicio;
+
             if (servidorIP != "")
             {
-                string rutaBase = "\\\\" + servidorIP + "\\" + ConfigurationManager.AppSettings["depositoCarpeta"].ToString();
+                List<DCServicio.InfoArchivo> informacionLista = new List<DCServicio.InfoArchivo>();
 
+                foreach (DataRow fila in archivosTabla.Rows)
+                {
+                    informacionLista.Add(FormatearInfoArchivo(fila, servidorIP));
+
+                }
                 try
                 {
-                    archivosTabla.Columns.Add("Archivo", typeof(string));
-                    archivosTabla.Columns.Add("FechaHoraProceso", typeof(DateTime));
+                    List<int> resultado = cliente.ProcesarArchivos(informacionLista);
+                    cliente.Close();
 
-                    foreach (DataRow fila in archivosTabla.Rows)
+                    Invoke(new ToDoDelegate(() =>
                     {
-                        DirectoryInfo directoryInfo = new DirectoryInfo(fila["Identificador"].ToString());
 
-                        DateTime fechaHoraProceso = DateTime.Now;
-                        
-                        string anoPath = fechaHoraProceso.ToString("yyyy");
-                        string mesPath = fechaHoraProceso.ToString("MM");
-                        string diaPath = fechaHoraProceso.ToString("dd");
+                        for (int x = 0; x < resultado.Count(); x++)
+                        {
+                            DataRow[] matches = dataSource.Select("ID='" + resultado[x] + "'");
+                            foreach (DataRow row in matches)
+                            {
+                                dataSource.Rows.Remove(row);
+                            }
+                        }
+                        dataSource.AcceptChanges();
+                    }));
+                }
+                catch
+                {
+                    XtraMessageBox.Show("El servidor no devolvió respuesta despues del envio de la infomación a la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }     
+                
+            }
+            else
+            {
+                foreach (DataRow fila in archivosTabla.Rows)
+                {
 
-                        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                        var random = new Random();
-                        string randomString = new string(
-                        Enumerable.Repeat(chars, 70)
-                        .Select(s => s[random.Next(s.Length)])
-                        .ToArray()
-                        );
-
-                        string nombreArchivo = anoPath + "-" + mesPath + "-" + diaPath + "_" + randomString + directoryInfo.Extension;
-
-                        
-                        fila["Identificador"] = "<" + Path.GetFileNameWithoutExtension(directoryInfo.Name) + ">";
-                        
-   
-                        fila["Archivo"] = nombreArchivo;
-                        fila["FechaHoraProceso"] = fechaHoraProceso;
-                        File.Copy(directoryInfo.FullName, rutaBase + "\\" + nombreArchivo);
-                    }
+                    DirectoryInfo directoryInfo = new DirectoryInfo(fila["Identificador"].ToString());
 
                     try
                     {
-                        DCServicio.DCServicioClient cliente = Globals.ThisAddIn.ClienteServicio;
+                        byte[] contenido = File.ReadAllBytes(directoryInfo.FullName);
 
-                        List<int> resultado = cliente.ProcesarArchivos(archivosTabla);
+                        DCServicio.InfoArchivo filaEnviar = FormatearInfoArchivo(fila, servidorIP); //servidorIP blanco
+
+                        int resultado = cliente.ProcesarArchivoRemoto(filaEnviar, contenido);
                         cliente.Close();
 
                         Invoke(new ToDoDelegate(() =>
                         {
 
-                            for (int x = 0; x < resultado.Count(); x++)
+                            DataRow[] matches = dataSource.Select("ID='" + resultado + "'");
+                            foreach (DataRow row in matches)
                             {
-                                DataRow[] matches = dataSource.Select("ID='" + resultado[x] + "'");
-                                foreach (DataRow row in matches)
-                                {
-                                    dataSource.Rows.Remove(row);
-                                }
+                                dataSource.Rows.Remove(row);
                             }
+
                             dataSource.AcceptChanges();
                         }));
                     }
                     catch
                     {
-                        XtraMessageBox.Show("El archivo no se encontro, no mueva o elimine el archivo antes que se realice el proceso.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        XtraMessageBox.Show("El servidor no devolvió respuesta despues del envio del archivo a la base de datos o no se pudo leer el archivo original.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     }
+                }
+            }
+        }
+
+        private DCServicio.InfoArchivo FormatearInfoArchivo (DataRow fila, string servidorIP){
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(fila["Identificador"].ToString());
+            
+            dynamic id = fila["ID"];
+            dynamic procesoID = fila["ProcesoID"];
+            dynamic nombre = fila["Nombre"];
+            dynamic nota = fila["Nota"];
+            dynamic tipoID = fila["TipoID"];
+            dynamic cuentaID = fila["CuentaID"];
+            dynamic carpeta = fila["Carpeta"];
+            dynamic identificador = fila["Identificador"];
+            dynamic ano = fila["Ano"];
+            dynamic numFile = fila["NumFile"];
+            dynamic numFileFisico = fila["NumFileFisico"];
+            dynamic sender = fila["Sender"];
+            dynamic reciever = fila["Reciever"];
+            dynamic fechaHora = fila["FechaHora"];
+
+            DCServicio.InfoArchivo informacion = new DCServicio.InfoArchivo();
+
+            DateTime fechaHoraProceso = DateTime.Now;
+
+            string anoPath = fechaHoraProceso.ToString("yyyy");
+            string mesPath = fechaHoraProceso.ToString("MM");
+            string diaPath = fechaHoraProceso.ToString("dd");
+
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            string randomString = new string(
+            Enumerable.Repeat(chars, 70)
+            .Select(s => s[random.Next(s.Length)])
+            .ToArray()
+            );
+
+            informacion.archivo = anoPath + "-" + mesPath + "-" + diaPath + "_" + randomString + directoryInfo.Extension;
+            informacion.id = id;
+            informacion.procesoID = procesoID;
+            informacion.nombre = nombre;
+            informacion.tipoID = tipoID;
+            informacion.cuentaID = cuentaID;
+            informacion.carpeta = carpeta;
+            informacion.identificador = "<" + Path.GetFileNameWithoutExtension(directoryInfo.Name) + ">";
+            informacion.nota = nota;
+            informacion.ano = ano;
+            informacion.numFile = numFile;
+            informacion.numFileFisico = numFileFisico;
+            informacion.sender = sender;
+            informacion.reciever = reciever;
+            informacion.fechaHora = fechaHora;
+            informacion.fechaHoraProceso = fechaHoraProceso;
+
+            if (servidorIP != "")
+            {
+
+                string rutaBase = "\\\\" + servidorIP + "\\" + ConfigurationManager.AppSettings["depositoCarpeta"].ToString();
+                try
+                {
+                    File.Copy(directoryInfo.FullName, rutaBase + "\\" + informacion.archivo);
                 }
                 catch
                 {
-                   XtraMessageBox.Show("Hubo un error en el proceso del archivo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    XtraMessageBox.Show("No se pudo copiar: " + directoryInfo.FullName + " a la a la ubicación: " + rutaBase + "\\" + informacion.archivo, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    return null;
                 }
+
             }
-            else
-            {
-                if (archivosTabla.Rows.Count > 0)
-                {
-                    MessageBox.Show("Solo esta implementada la carga en red local");
-                }
-            }
+
+            return informacion;
         }
 
         private void ProcesoTerminadoExchange(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -379,7 +444,6 @@ namespace DCAddIn
             itemsGridView.Columns["Reciever"].Visible = false;
             itemsGridView.Columns["Reciever"].OptionsColumn.AllowEdit = false;
             itemsGridView.Columns["Reciever"].OptionsColumn.AllowFocus = false;
-
             cliente.Close();
         }
 
@@ -400,6 +464,7 @@ namespace DCAddIn
 
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["ProcesoID"], datos[0]);
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["Nombre"], datos[1]);
+                itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["Nota"], "");
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["Carpeta"], datos[2]);
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["CuentaID"], datos[3]);
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["Identificador"], datos[4]);
@@ -407,6 +472,7 @@ namespace DCAddIn
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["Reciever"], datos[6]);
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["FechaHora"], datos[7]);
                 itemsGridView.SetRowCellValue(newRowHandle, itemsGridView.Columns["ID"], lastRow);
+
 
                 string numFile = ObtenerFileAsunto(datos[1].ToString());
                 if (numFile != null)

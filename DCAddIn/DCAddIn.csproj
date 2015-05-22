@@ -340,20 +340,20 @@
     <None Include="Service References\DCServicio\DCAddIn.DCServicio.Tipo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\DCServicio\DCServicio.wsdl" />
-    <None Include="Service References\DCServicio\DCServicio.xsd">
+    <None Include="Service References\DCServicio\DCServicio1.wsdl" />
+    <None Include="Service References\DCServicio\DCServicio5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio1.xsd">
+    <None Include="Service References\DCServicio\DCServicio51.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio2.xsd">
+    <None Include="Service References\DCServicio\DCServicio52.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio3.xsd">
+    <None Include="Service References\DCServicio\DCServicio53.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio4.xsd">
+    <None Include="Service References\DCServicio\DCServicio54.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="ThisAddIn.Designer.xml">
@@ -396,9 +396,6 @@
     <WCFMetadataStorage Include="Service References\DCServicio\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\DCServicio\DCServicio.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\DCServicio\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +409,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />
+    <None Include="Service References\DCServicio\DCServicio1.disco" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
