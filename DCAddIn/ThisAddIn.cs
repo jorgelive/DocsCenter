@@ -455,11 +455,11 @@ namespace DCAddIn
                 return;
             }
             
-            DataRow[] matches = DCPanelControl.DataSource.Select("Identificador='"+datos[3].ToString()+"'");
+            DataRow[] matches = DCPanelControl.DataSource.Select("Identificador='"+datos[4].ToString()+"'");
 
             if (matches.Length > 0)
             {
-                XtraMessageBox.Show("El item ya existe en la lista.", "Datos repetidos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                XtraMessageBox.Show("El item '" + datos[1] + "' ya existe en la lista.", "Datos repetidos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -472,23 +472,12 @@ namespace DCAddIn
 
         private string DescargarCorreo(Outlook.MailItem item, string mensajeID)
         {
-            var userPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\ShareCenter";
 
             string pathFileName = "";
 
             try
             {
-                if (!Directory.Exists(userPath))
-                {
-                    Directory.CreateDirectory(userPath);
-                }
-
-                if (!Directory.Exists(userPath + "\\Upload"))
-                {
-                    Directory.CreateDirectory(userPath + "\\Upload");
-                }
-
-                pathFileName = userPath + "\\Upload\\" + mensajeID.Substring(1, (mensajeID.Length - 2)) + ".msg";
+                pathFileName = ObtenerRutaArchivo("Upload") + mensajeID.Substring(1, (mensajeID.Length - 2)) + ".msg";
 
                 item.SaveAs(pathFileName, Outlook.OlSaveAsType.olMSG);
             }
@@ -497,6 +486,24 @@ namespace DCAddIn
                 EscribirLog("Hubo un error en la descarga del archivo.");
             }
             return pathFileName;
+
+        }
+
+        public string ObtenerRutaArchivo(string tipo)
+        {
+            var shareCenterPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\ShareCenter";
+            
+            if (!Directory.Exists(shareCenterPath))
+            {
+                Directory.CreateDirectory(shareCenterPath);
+            }
+
+            if (!Directory.Exists(shareCenterPath + "\\" + tipo))
+            {
+                Directory.CreateDirectory(shareCenterPath + "\\" + tipo);
+            }
+
+            return shareCenterPath + "\\" + tipo + "\\";
 
         }
 

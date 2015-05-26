@@ -17,6 +17,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using System.Configuration;
 using System.ServiceModel.Security;
+using Outlook = Microsoft.Office.Interop.Outlook;
 
 namespace DCAddIn
 {
@@ -36,10 +37,143 @@ namespace DCAddIn
         public DCPanelControl()
         {
             InitializeComponent();
-            itemsGridControl.Width=this.Width-95;
+            itemsGridControl.Width = this.Width - 95;
             itemsGridControl.Height = this.Height - 5;
+            itemsGridControl.DragDrop += new DragEventHandler(ItemsGridControl_DragDrop);
+            itemsGridControl.DragEnter += new DragEventHandler(ItemsGridControl_DragEnter);
             dataSource = columnasDataTable;
             itemsGridControl.DataSource = dataSource;
+        }
+
+        private void ItemsGridControl_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) //archivo
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else if (e.Data.GetDataPresent(DataFormats.Text)) //correo
+            {
+                string[] formats = e.Data.GetFormats();
+
+                if(formats.Contains("FileContents")){
+                     e.Effect = DragDropEffects.Copy;
+                }
+            }
+            else if (e.Data.GetDataPresent("FileGroupDescriptor")) //adjunto
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+
+        }
+
+        private void ItemsGridControl_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) //archivo
+            {
+                string[] listaArchivos = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+                foreach (string archivo in listaArchivos)
+                {
+                    AgregarArchivo(archivo);
+                }
+            }
+            else if (e.Data.GetDataPresent(DataFormats.Text)) //correo
+            {
+                string[] formats = e.Data.GetFormats();
+
+                if (formats.Contains("FileContents"))
+                {
+                    try
+                    {
+                        if (Globals.ThisAddIn.Application.ActiveExplorer().Selection.Count > 0)
+                        {
+
+                            Outlook.Explorer explorador = Globals.ThisAddIn.Application.ActiveExplorer();
+                            Outlook.Selection seleccion = explorador.Selection;
+
+                            for (var i = 1; i <= seleccion.Count; i++)
+                            {
+                                if (seleccion[i] is Outlook.MailItem)
+                                {
+                                    Outlook.MailItem item = seleccion[i] as Outlook.MailItem;
+                                    Globals.ThisAddIn.AgregarCorreoPanel(item);
+                                    explorador.RemoveFromSelection(item);
+                                }
+
+                            }
+
+                            e.Data.GetData("RenPrivateMessages"); //fix para office 2010
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+            else if (e.Data.GetDataPresent("FileGroupDescriptor")) //adjunto, primero debe estar el caso del correo
+            {
+                Stream stream = (Stream)e.Data.GetData("FileGroupDescriptor");
+                byte[] fileGroupDescriptor = new byte[512];
+                stream.Read(fileGroupDescriptor, 0, 512);
+                
+                StringBuilder fileName = new StringBuilder("");
+
+                for (int i = 76; fileGroupDescriptor[i] != 0; i++)
+                {
+                    fileName.Append(Convert.ToChar(fileGroupDescriptor[i])); 
+                }
+                stream.Close();
+
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var random = new Random();
+                string randomString = new string(
+                Enumerable.Repeat(chars, 20)
+                .Select(s => s[random.Next(s.Length)])
+                .ToArray()
+                );
+
+                string pathFileName = Globals.ThisAddIn.ObtenerRutaArchivo("Upload") + randomString + "_" +fileName.ToString();
+
+                MemoryStream memoryStream = (MemoryStream) e.Data.GetData("FileContents", true);
+
+                if (memoryStream == null){
+                    XtraMessageBox.Show("No se pudo leer el archivo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    return;
+                }
+
+                byte [] fileBytes = new byte[memoryStream.Length];
+         
+                memoryStream.Position = 0;
+                memoryStream.Read(fileBytes,0,(int)memoryStream.Length);
+          
+                FileStream fileStream = new FileStream(pathFileName,FileMode.Create);
+                fileStream.Write(fileBytes, 0, (int)fileBytes.Length);
+
+                fileStream.Close();
+
+                FileInfo archivo = new FileInfo(pathFileName);
+
+                if (archivo.Exists == true)
+                {
+                    int posicionPunto = fileName.ToString().LastIndexOf(".");
+                    AgregarArchivo(pathFileName, fileName.ToString().Substring(0, posicionPunto)); //nombre sin extension
+                }
+                else
+                {
+                    XtraMessageBox.Show("No se pudo descargar el adjunto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
+
+            }
+
+
         }
 
         private DataTable exchangeTabla;
@@ -389,6 +523,7 @@ namespace DCAddIn
 
             itemsGridView.OptionsView.ShowGroupPanel = false;
             itemsGridView.OptionsNavigation.EnterMoveNextColumn = true;
+            itemsGridView.Columns["ProcesoID"].Visible = false;
             itemsGridView.Columns["ProcesoID"].Width = 20;
             itemsGridView.Columns["ProcesoID"].OptionsColumn.AllowEdit = false;
             itemsGridView.Columns["ProcesoID"].OptionsColumn.AllowFocus = false;
@@ -677,24 +812,34 @@ namespace DCAddIn
             Nullable<bool> result = dlg.ShowDialog();
             if (result == true)
             {
-                string pathFileName = dlg.FileName;
-                
-                DirectoryInfo directoryInfo = new DirectoryInfo(pathFileName);
-
-                List<object> datos = new List<object>();
-
-                datos.Add(2); //0 modo
-                datos.Add(Path.GetFileNameWithoutExtension(directoryInfo.Name)); //1
-                datos.Add(directoryInfo.Parent.FullName); //2
-                datos.Add(Globals.ThisAddIn.UserNameList[0]); //3
-                datos.Add(pathFileName); //4
-                datos.Add(""); //5
-                datos.Add(""); //6
-                datos.Add(directoryInfo.CreationTime); //7
-
-                ItemsGridControl_AgregarFilaPanel(datos);
+                AgregarArchivo(dlg.FileName);
             }
  
+        }
+
+        private void AgregarArchivo(string pathFileName, string nombre = null)
+        {
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(pathFileName);
+
+            List<object> datos = new List<object>();
+
+            if (nombre == null)
+            {
+                nombre = Path.GetFileNameWithoutExtension(directoryInfo.Name);
+            }
+
+            datos.Add(2); //0 modo
+            datos.Add(nombre); //1
+            datos.Add(directoryInfo.Parent.FullName); //2
+            datos.Add(Globals.ThisAddIn.UserNameList[0]); //3
+            datos.Add(pathFileName); //4
+            datos.Add(""); //5
+            datos.Add(""); //6
+            datos.Add(directoryInfo.CreationTime); //7
+
+            ItemsGridControl_AgregarFilaPanel(datos);
+
         }
 
         private void BorrarButton_Click(object sender, EventArgs e)

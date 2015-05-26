@@ -41,6 +41,7 @@
             // 
             // itemsGridControl
             // 
+            this.itemsGridControl.AllowDrop = true;
             this.itemsGridControl.Cursor = System.Windows.Forms.Cursors.Default;
             this.itemsGridControl.Location = new System.Drawing.Point(94, 3);
             this.itemsGridControl.MainView = this.itemsGridView;
@@ -100,7 +101,6 @@
             // 
             // DCPanelControl
             // 
-            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.borrarBoton);

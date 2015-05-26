@@ -35,10 +35,10 @@
     <PublishUrl>S:\Instaladores\Oficina\ShareCenter\</PublishUrl>
     <InstallUrl />
     <TargetCulture>es</TargetCulture>
-    <ApplicationVersion>1.3.1.2</ApplicationVersion>
+    <ApplicationVersion>1.5.1.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
-    <UpdateInterval>4</UpdateInterval>
+    <UpdateInterval>2</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <ProductName>Share Center</ProductName>
     <PublisherName>Vipac</PublisherName>
@@ -340,20 +340,20 @@
     <None Include="Service References\DCServicio\DCAddIn.DCServicio.Tipo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\DCServicio\DCServicio1.wsdl" />
-    <None Include="Service References\DCServicio\DCServicio5.xsd">
+    <None Include="Service References\DCServicio\DCServicio.wsdl" />
+    <None Include="Service References\DCServicio\DCServicio.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio51.xsd">
+    <None Include="Service References\DCServicio\DCServicio1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio52.xsd">
+    <None Include="Service References\DCServicio\DCServicio2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio53.xsd">
+    <None Include="Service References\DCServicio\DCServicio3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCServicio\DCServicio54.xsd">
+    <None Include="Service References\DCServicio\DCServicio4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="ThisAddIn.Designer.xml">
@@ -409,7 +409,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.txt" />
-    <None Include="Service References\DCServicio\DCServicio1.disco" />
+    <None Include="Service References\DCServicio\DCServicio.disco" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
