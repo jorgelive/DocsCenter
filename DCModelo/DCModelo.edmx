@@ -29,7 +29,7 @@
           <Property Name="Nota" Type="varchar2" MaxLength="500" />
           <Property Name="CuentaID" Type="varchar2" MaxLength="30" Nullable="false" />
           <Property Name="Carpeta" Type="varchar2" MaxLength="255" Nullable="false" />
-          <Property Name="Identificador" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="Identificador" Type="varchar2" MaxLength="200" Nullable="false" />
           <Property Name="Archivo" Type="varchar2" MaxLength="255" Nullable="false" />
           <Property Name="Sender" Type="varchar2" MaxLength="100" />
           <Property Name="Reciever" Type="varchar2" MaxLength="500" />
@@ -73,7 +73,7 @@ advertencia 6002: La tabla o vista 'DOCUMENTACION.DocumentoFile' no tiene defini
           <Property Name="Ano" Type="varchar2" MaxLength="4" Nullable="false" />
           <Property Name="NumFile" Type="varchar2" MaxLength="10" Nullable="false" />
           <Property Name="NumFileFisico" Type="varchar2" MaxLength="5" Nullable="false" />
-          <Property Name="AnoFile" Type="varchar2" MaxLength="43" />
+          <Property Name="AnoFile" Type="varchar2" MaxLength="8" />
           <Property Name="ProcesoID" Type="number" Precision="2" Scale="0" Nullable="false" />
           <Property Name="TipoID" Type="number" Precision="2" Scale="0" Nullable="false" />
           <Property Name="Nombre" Type="varchar2" MaxLength="500" Nullable="false" />
@@ -315,7 +315,7 @@ FROM "DOCUMENTACION"."FilePrincipal" "FilePrincipal"</DefiningQuery>
           <Property Name="Nota" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CuentaID" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Carpeta" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Identificador" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Identificador" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Archivo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Sender" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Reciever" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />

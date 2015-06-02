@@ -477,7 +477,7 @@ namespace DCAddIn
 
             try
             {
-                pathFileName = ObtenerRutaArchivo("Upload") + mensajeID.Substring(1, (mensajeID.Length - 2)) + ".msg";
+                pathFileName = ObtenerRutaArchivo("Upload") + mensajeID + ".msg";  //mensajeID.Substring(1, (mensajeID.Length - 2))
 
                 item.SaveAs(pathFileName, Outlook.OlSaveAsType.olMSG);
             }
@@ -535,8 +535,8 @@ namespace DCAddIn
             {
                 tipoProceso = 1;
 
-                mensajeID = DescargarCorreo(item, mensajeID);
-                EscribirLog("Se descargará el correo: " + item.Subject.Trim() + " en la ruta:" + mensajeID);
+                mensajeID = DescargarCorreo(item, LimpiarCadena(mensajeID));
+                EscribirLog("Se descargó el correo: " + item.Subject.Trim() + " en la ruta:" + mensajeID);
             }
 
             resultado.Add(tipoProceso); //0
@@ -549,6 +549,18 @@ namespace DCAddIn
             resultado.Add(item.SentOn); //7
 
             return resultado;
+        }
+
+        internal string LimpiarCadena(string cadena)
+        {
+            string file = string.Concat(cadena.Split(System.IO.Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries));
+
+            if (file.Length > 200)
+            {
+                file = file.Substring(0, 200);
+            }
+
+            return file;
         }
 
         private string GetRecipientsSMTPAddress(Outlook.MailItem mail)

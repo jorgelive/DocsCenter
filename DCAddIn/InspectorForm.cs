@@ -22,9 +22,12 @@ using System.Data.Services.Client;
 
 namespace DCAddIn
 {
+    
     public partial class InspectorForm : DevExpress.XtraEditors.XtraForm
     {
 
+        public bool abriendoArchivo = false;
+        
         DevExpress.Xpf.Core.ServerMode.Wcf5.WcfInstantFeedbackDataSource source = new DevExpress.Xpf.Core.ServerMode.Wcf5.WcfInstantFeedbackDataSource();
         Entities context = new Entities(new Uri(ConfigurationManager.AppSettings["ubicacionDataServicio"].ToString()));
         public InspectorForm()
@@ -90,10 +93,28 @@ namespace DCAddIn
                 }
 
             }
+
             if (archivoEncontrado == false)
             {
                 XtraMessageBox.Show("El archivo no se ha encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                abriendoArchivo = false;
+                return;
             }
+
+            BackgroundWorker timer = new BackgroundWorker();
+            timer.DoWork += FileTimer;
+            timer.RunWorkerCompleted += FileTimeEnd;
+            timer.RunWorkerAsync();
+        }
+
+        private void FileTimer(object sender, DoWorkEventArgs e)
+        {
+            System.Threading.Thread.Sleep(2500);
+        }
+
+        private void FileTimeEnd(object sender, RunWorkerCompletedEventArgs e)
+        {
+            abriendoArchivo = false;
         }
 
         private void AbrirArchivoWeb(GridView view){
@@ -151,7 +172,15 @@ namespace DCAddIn
 
         private void InspectorGridView_DoubleClick(object sender, EventArgs e)
         {
-            
+
+            if (abriendoArchivo)
+            {
+                XtraMessageBox.Show("El archivo se esta abriendo por favor espere.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            abriendoArchivo = true;
+
             string servidorIP = Globals.ThisAddIn.CurrentServer;
 
             if (servidorIP != "")
