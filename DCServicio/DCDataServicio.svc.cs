@@ -23,7 +23,7 @@ namespace DCServicio
             // config.SetEntitySetAccessRule("*", EntitySetRights.All);
             // config.SetServiceOperationAccessRule("MyServiceOperation", ServiceOperationRights.All);
             config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V3;
-            config.SetEntitySetAccessRule("*", EntitySetRights.AllRead);
+            config.SetEntitySetAccessRule("DocumentoFiles", EntitySetRights.AllRead);
         }
     }
 }

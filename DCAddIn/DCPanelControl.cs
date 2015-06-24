@@ -661,7 +661,7 @@ namespace DCAddIn
 
                     if (!String.IsNullOrEmpty(matchFile))
                     {
-                        
+
                         return matchFile;
                     }
                 }
@@ -745,13 +745,16 @@ namespace DCAddIn
                 return null;
             }
 
-            if (partes[0].Length == 2 || partes[0].Length == 4)
+            if (!(partes[0].Length == 2 || partes[0].Length == 4))
             {
-
-            }
-            else
-            {
-                return null;
+                if (partes[1].Length == 2 || partes[1].Length == 4)
+                {
+                    Array.Reverse(partes);
+                }
+                else
+                {
+                    return null;
+                }
             }
 
             if (partes[0].Length == 2)
