@@ -162,12 +162,17 @@ namespace DCAddIn
             if (File.Exists(userPath + "\\Download\\" + anoPath + "\\" + mesPath + "\\" + diaPath + "\\" + archivoDescargado.Archivo))
             {
                 System.Diagnostics.Process.Start(userPath + "\\Download\\" + anoPath + "\\" + mesPath + "\\" + diaPath + "\\" + archivoDescargado.Archivo);
-
+                BackgroundWorker timer = new BackgroundWorker();
+                timer.DoWork += FileTimer;
+                timer.RunWorkerCompleted += FileTimeEnd;
+                timer.RunWorkerAsync();
             }
             else
             {
+                abriendoArchivo = false;
                 XtraMessageBox.Show("El archivo no se ha encontrado, vuelva a intentarlo en 10 minutos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private void InspectorGridView_DoubleClick(object sender, EventArgs e)

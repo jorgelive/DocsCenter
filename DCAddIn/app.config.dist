@@ -4,7 +4,7 @@
     <section name="fileServers" type="System.Configuration.AppSettingsSection, System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
   </configSections>
   <appSettings>
-    <add key="ubicacionDataServicio" value="http://*.pe:8080/DCDataServicio.svc/"/>
+    <add key="ubicacionDataServicio" value="http://*/DCDataServicio.svc/"/>
     <add key="servidorCarpeta" value="Documentacion"/>
     <add key="depositoCarpeta" value="DocumentacionDrop"/>
     <add key="ClientSettingsProvider.ServiceUri" value=""/>
@@ -38,12 +38,14 @@
   <system.serviceModel>
     <bindings>
       <wsHttpBinding>
-        <binding name="WSHttpBinding_IDCServicio" allowCookies="true"
-                 maxReceivedMessageSize="2147483647"
-                 maxBufferPoolSize="2147483647">
-          <readerQuotas maxDepth="32"
-                 maxArrayLength="2147483647"
-                 maxStringContentLength="2147483647"/>
+        <binding name="WSHttpBinding_IDCServicio" maxBufferPoolSize="2147483647"
+          maxReceivedMessageSize="2147483647" allowCookies="true">
+          <readerQuotas
+            maxArrayLength="2147483647"
+            maxBytesPerRead="2147483647"
+            maxDepth="2147483647"
+            maxNameTableCharCount="2147483647"
+            maxStringContentLength="2147483647" />
           <security>
             <message clientCredentialType="UserName" />
           </security>
@@ -51,7 +53,7 @@
       </wsHttpBinding>
     </bindings>
     <client>
-      <endpoint address="http://*:8080/DCServicio.svc"
+      <endpoint address="http://*/DCServicio.svc"
         binding="wsHttpBinding" bindingConfiguration="WSHttpBinding_IDCServicio"
         contract="DCServicio.IDCServicio" name="WSHttpBinding_IDCServicio">
         <identity>
@@ -72,4 +74,4 @@
       </providers>
     </roleManager>
   </system.web>
-<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.1"/></startup></configuration>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2"/></startup></configuration>
