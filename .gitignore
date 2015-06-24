@@ -12,4 +12,7 @@ web*config
 /Consola
 /DCServicio/App_Data
 /packages
-/DCAddIn/Service References
+/DCAddIn/Service References/DCDataServicio/*
+!/DCAddIn/Service References/DCDataServicio/Reference.datasvcmap
+/DCAddIn/Service References/DCServicio/*
+!/DCAddIn/Service References/DCServicio/Reference.svcmap
