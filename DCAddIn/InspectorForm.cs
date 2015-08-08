@@ -128,6 +128,10 @@ namespace DCAddIn
             if (File.Exists(userPath + "\\Download\\" + anoPath + "\\" + mesPath + "\\" + diaPath + "\\" + view.GetRowCellValue(view.FocusedRowHandle, "Archivo")))
             {
                 System.Diagnostics.Process.Start(userPath + "\\Download\\" + anoPath + "\\" + mesPath + "\\" + diaPath + "\\" + view.GetRowCellValue(view.FocusedRowHandle, "Archivo"));
+                BackgroundWorker timer = new BackgroundWorker();
+                timer.DoWork += FileTimer;
+                timer.RunWorkerCompleted += FileTimeEnd;
+                timer.RunWorkerAsync();
                 return;
 
             }

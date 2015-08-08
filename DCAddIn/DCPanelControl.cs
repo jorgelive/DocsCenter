@@ -237,33 +237,24 @@ namespace DCAddIn
             itemsGridView.CloseEditor();
             itemsGridView.UpdateCurrentRow();
 
-            DataRow[] matches = dataSource.Select("NombreFile is null");
-
-            if (matches.Length > 0)
-            {
-                XtraMessageBox.Show("No se ingresó el numero de file o la información es incorrecta.", "Datos no completos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
-            matches = dataSource.Select("TipoID is null");
-
-            if (matches.Length > 0)
-            {
-                XtraMessageBox.Show("No se seleccionó el tipo o la información es incorrecta.", "Datos no completos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
             if (enProceso == true)
             {
                 XtraMessageBox.Show("Los datos se estan procesando, por favor espere...");
                 return;
             }
 
+            DataRow[] matches = dataSource.Select("TipoID is null or NombreFile is null");
+
             enProceso = true;
+
+            if (matches.Length > 0)
+            {
+                XtraMessageBox.Show("Los campos tipo y un número de file válido son requeridos, las filas que no tengan estos datos no serán procesadas.", "Datos no completos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
 
             itemsGridView.OptionsBehavior.Editable = false;
 
-            DataRow[] correos = dataSource.Select("ProcesoID=3");
+            DataRow[] correos = dataSource.Select("ProcesoID=3 and (NombreFile is not null and TipoID is not null)");
             exchangeTabla = dataSource.Clone();
 
             foreach (DataRow row in correos)
@@ -271,7 +262,7 @@ namespace DCAddIn
                 exchangeTabla.Rows.Add(row.ItemArray);
             }
 
-            DataRow[] archivos = dataSource.Select("ProcesoID=1 or ProcesoID=2");
+            DataRow[] archivos = dataSource.Select("(ProcesoID=1 or ProcesoID=2) and (NombreFile is not null and TipoID is not null)");
             archivosTabla = dataSource.Clone();
 
             foreach (DataRow row in archivos)
